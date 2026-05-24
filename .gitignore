@@ -1,10 +1,24 @@
-# Python-generated files
-__pycache__/
-*.py[oc]
-build/
-dist/
-wheels/
-*.egg-info
+# env
+.env
+.venv/
 
-# Virtual environments
-.venv
+# python
+__pycache__/
+*.py[cod]
+
+# logs
+*.log
+
+# db
+*.sqlite3
+
+# tests
+.pytest_cache/
+
+# ide
+.vscode/
+.idea/
+
+# celery
+celerybeat-schedule
+celerybeat.pid
