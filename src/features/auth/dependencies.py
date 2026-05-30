@@ -17,3 +17,4 @@ async def get_auth_service():
         raise
     finally:
         await uow.__aexit__(None, None, None)
+    return
