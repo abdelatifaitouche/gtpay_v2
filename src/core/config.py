@@ -8,6 +8,12 @@ class Settings(BaseSettings):
 
     DEBUG: bool
 
+    # jwt configs
+    JWT_SECRET_KEY: str
+    JWT_ALGO: str
+    ACCESS_TOKEN_TIME: int
+    REFRESH_TOKEN_TIME: int
+
     MINIO_ENDPOINT: str
     MINIO_ACCESS_KEY: str
     MINIO_SECRET_KEY: str

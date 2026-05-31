@@ -1,6 +1,6 @@
 from src.infra.db.mixins import TimestampMixin, UUIDMixin
 from src.infra.db.base import Base
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import String, Enum, Boolean
 from src.features.tenant.enums.tenant import TenantType, TenantStatus
 
@@ -26,4 +26,8 @@ class Tenant(Base, TimestampMixin, UUIDMixin):
         Boolean,
         default=True,
         nullable=False,
+    )
+
+    users: Mapped[list["User"]] = relationship(
+        back_populates="tenant", cascade="all, delete-orphan"
     )
