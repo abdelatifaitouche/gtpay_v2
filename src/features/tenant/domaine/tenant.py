@@ -11,8 +11,16 @@ class CreateTenant:
 
 @dataclass
 class Tenant:
-    id: UUID
     name: str
     type: TenantType
-    status: TenantStatus
-    is_active: bool
+    status: TenantStatus | None = None
+    is_active: bool | None = None
+    id: UUID | None = None
+
+
+@dataclass
+class TenantUpdate:
+    name: str | None = None
+    type: TenantType | None = None
+    status: TenantStatus | None = None
+    is_active: bool | None = None

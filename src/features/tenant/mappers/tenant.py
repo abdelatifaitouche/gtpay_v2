@@ -1,5 +1,9 @@
-from src.features.tenant.schemas.tenant import CreateTenant
-from src.features.tenant.domaine.tenant import CreateTenant as CreateTenantEntity
+from src.features.tenant.schemas.tenant import CreateTenant, UpdateTenant
+
+from src.features.tenant.domaine.tenant import (
+    CreateTenant as CreateTenantEntity,
+    TenantUpdate as TenantUpdateDTO,
+)
 
 
 class TenantMapper:
@@ -9,3 +13,9 @@ class TenantMapper:
             name=data.name,
             type=data.type,
         )
+
+    @staticmethod
+    def to_update_dto(schema: UpdateTenant) -> TenantUpdateDTO:
+        data = schema.model_dump(exclude_unset=True)
+        print(data)
+        return TenantUpdateDTO(**data)

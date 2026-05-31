@@ -16,6 +16,7 @@ from uuid import UUID
 from src.features.tenant.domaine.tenant import (
     Tenant as TenantEntity,
     CreateTenant as CreateTenantEntity,
+    TenantUpdate as TenantUpdateDTO,
 )
 from src.features.tenant.models.tenant import Tenant as TenantDB
 
@@ -53,10 +54,13 @@ class TenantRepository:
                 logger.exception("Programming error")
                 raise DatabaseError("Unkown database Error") from e
 
-    def to_orm(self, tenant: CreateTenantEntity) -> TenantDB:
+    def to_orm(self, tenant: TenantEntity) -> TenantDB:
         return TenantDB(
-            name=tenant.name,
+            id=tenant.id,
+            status=tenant.status,
             type=tenant.type,
+            name=tenant.name,
+            is_active=tenant.is_active,
         )
 
     def to_domain(self, orm: TenantDB) -> TenantEntity:
@@ -68,9 +72,9 @@ class TenantRepository:
             is_active=orm.is_active,
         )
 
-    async def save(self, tenant: CreateTenantEntity) -> TenantEntity:
-        orm: TenantDB = self.to_orm(tenant)
-        self.db.add(orm)
+    async def save(self, tenant: TenantEntity) -> TenantEntity:
+        orm = self.to_orm(tenant)
+        orm = await self.db.merge(orm)
         await self.db.flush()
         await self.db.refresh(orm)
         return self.to_domain(orm)
@@ -101,8 +105,20 @@ class TenantRepository:
             )
             self.translate_db_error(e)
 
-    async def update(self):
-        return
+    async def orm_update(self, orm: TenantDB, data: TenantUpdateDTO) -> TenantDB:
+        if data.name:
+            orm.name = data.name
+
+        if data.type:
+            orm.type = data.type
+
+        if data.status:
+            orm.status = data.status
+
+        if data.is_active:
+            orm.is_active = data.is_active
+
+        return orm
 
     async def delete(self):
         return

@@ -16,3 +16,10 @@ class ReadTenant(BaseModel):
     is_active: bool
 
     model_config = {"from_attributes": True}
+
+
+class UpdateTenant(BaseModel):
+    name: str | None = None
+    type: TenantType | None = None
+    status: TenantStatus | None = None
+    is_active: bool | None = None
