@@ -9,7 +9,6 @@ from src.core.config import settings
 
 engine = create_async_engine(
     url=settings.DATABASE_URL,
-    echo=True,
     pool_size=10,  # Keeping this as 10 connections since not a lot trafic we will be using
     max_overflow=20,
     pool_timeout=30,
