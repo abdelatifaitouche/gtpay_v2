@@ -1,3 +1,5 @@
+import logging
+
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.exc import (
     NoResultFound,
@@ -9,7 +11,6 @@ from sqlalchemy.exc import (
     SQLAlchemyError,
 )
 from src.core.exceptions import NotFoundError, DatabaseError, ValidationError
-from src.core.logging import get_logger
 from sqlalchemy import select
 from uuid import UUID
 from src.features.tenant.domaine.tenant import (
@@ -19,7 +20,7 @@ from src.features.tenant.domaine.tenant import (
 from src.features.tenant.models.tenant import Tenant as TenantDB
 
 
-logger = get_logger(__name__)
+logger = logging.getLogger("tenant.repository")
 
 
 class TenantRepository:

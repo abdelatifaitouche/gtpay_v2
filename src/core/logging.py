@@ -1,15 +1,47 @@
 import logging
+import logging.config
+import json
 
 
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(name)s - %(message)s - %(errors)s",
-)
+# -------------------------
+# JSON FORMATTER (LOKI READY)
+# -------------------------
+class JsonFormatter(logging.Formatter):
+    def format(self, record):
+        log = {
+            "level": record.levelname,
+            "logger": record.name,
+            "message": record.getMessage(),
+            "time": self.formatTime(record),
+        }
 
-logging.getLogger("sqlalchemy.engine").setLevel(logging.WARNING)
-logging.getLogger("sqlalchemy.pool").setLevel(logging.WARNING)
-logging.getLogger("sqlalchemy.dialects").setLevel(logging.WARNING)
+        # safely include extra fields (NO CRASH EVER)
+        for key in ["method", "path", "status_code", "duration_ms"]:
+            if hasattr(record, key):
+                log[key] = getattr(record, key)
+
+        return json.dumps(log)
 
 
-def get_logger(name: str):
-    return logging.getLogger(name)
+# -------------------------
+# LOGGING CONFIG
+# -------------------------
+LOGGING_CONFIG = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "default": {
+            "()": "src.core.logging.JsonFormatter",
+        }
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "formatter": "default",
+        }
+    },
+    "root": {
+        "level": "INFO",
+        "handlers": ["console"],
+    },
+}
