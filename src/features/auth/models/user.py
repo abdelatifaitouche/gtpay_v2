@@ -13,7 +13,7 @@ class User(Base, UUIDMixin, TimestampMixin):
     tenant_id: Mapped[uuid.UUID] = mapped_column(
         ForeignKey("tenants.id"), nullable=False, index=True
     )
-
+    # add scope here CLIENT/PLATFORM
     is_active: Mapped[bool] = mapped_column(default=True)
 
     tenant: Mapped["Tenant"] = relationship(back_populates="users")

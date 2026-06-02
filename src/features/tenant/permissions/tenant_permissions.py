@@ -1,10 +1,10 @@
-from src.features.tenant.enums.tenant import TenantType
+from src.core.common.scope import Scope
 
 
 class TenantPermissions:
-    CREATE = ("tenants", "create", TenantType.PLATFORM)
-    READ = ("tenants", "read", TenantType.PLATFORM)
-    UPDATE = ("tenants", "update", TenantType.PLATFORM)
-    SUSPEND = ("tenants", "suspend", TenantType.PLATFORM)
-    ACTIVATE = ("tenants", "activate", TenantType.PLATFORM)
-    DELETE = ("tenants", "delete", TenantType.PLATFORM)
+    CREATE = ("tenants", "create", Scope.PLATFORM)
+    READ = ("tenants", "read", Scope.PLATFORM)
+    UPDATE = ("tenants", "update", Scope.PLATFORM)
+    SUSPEND = ("tenants", "suspend", Scope.PLATFORM)
+    ACTIVATE = ("tenants", "activate", Scope.PLATFORM)
+    DELETE = ("tenants", "delete", Scope.PLATFORM)
