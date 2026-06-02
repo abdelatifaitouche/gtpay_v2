@@ -1,5 +1,4 @@
 from src.core.role_permissions import ROLE_PERMISSIONS
-from src.infra.db.session import SessionLocal
 from sqlalchemy.ext.asyncio import AsyncSession
 from src.features.auth.models.roles import Role
 from src.features.auth.models.permissions import Permission
@@ -27,7 +26,7 @@ async def fetch_data(session: AsyncSession, model):
     return data
 
 
-async def seed(session: AsyncSession):
+async def seed_role_permissions(session: AsyncSession):
     """
     Role_permissions Seeding
     it does a lot of work am lazy just read it its simple

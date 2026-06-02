@@ -45,3 +45,9 @@ LOGGING_CONFIG = {
         "handlers": ["console"],
     },
 }
+
+
+def setup_logging():
+    from logging.config import dictConfig
+
+    dictConfig(LOGGING_CONFIG)
